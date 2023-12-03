@@ -4,7 +4,9 @@ import { Background } from './Background';
 
 export class Game {
   #app: Application<HTMLCanvasElement>;
+  // @ts-expect-error TODO
   #hero: Hero;
+  // @ts-expect-error TODO
   #background: Background;
 
   constructor() {
