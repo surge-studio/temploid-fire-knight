@@ -1,3 +1,5 @@
 export class Settings {
-  static placeholder = 100;
+  static unit = 32;
+  static mapWidth = 512;
+  static mapHeight = 480;
 }

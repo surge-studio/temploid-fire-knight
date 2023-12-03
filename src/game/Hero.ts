@@ -1,10 +1,11 @@
 import { AnimatedSprite, Container, Rectangle, Texture, Ticker } from 'pixi.js';
+import { Settings } from './Settings';
 
 const images = ['./sprites/hero.png'];
 
 export class Hero {
-  static width = 32;
-  static height = 32;
+  static width = Settings.unit;
+  static height = Settings.unit;
 
   #hero: AnimatedSprite;
   #view: Container;
@@ -21,6 +22,8 @@ export class Hero {
     const textures = images.map((image) => Texture.from(image));
     this.#hero = new AnimatedSprite(textures);
     this.#hero.anchor.set(0.5);
+    this.#hero.width = Hero.width;
+    this.#hero.height = Hero.height;
     this.#hero.play();
 
     this.#ticker = new Ticker();
@@ -69,7 +72,28 @@ export class Hero {
   }
 
   #move(delta: number) {
-    this.#hero.x += Math.round(((this.velocityX * Hero.width) / 8) * delta);
-    this.#hero.y += Math.round(((this.velocityY * Hero.height) / 8) * delta);
+    this.#hero.x += Math.round(
+      ((this.velocityX * Hero.width) / (Settings.unit * 0.25)) * delta
+    );
+
+    if (this.#hero.x < 0 + Settings.unit * 1.5) {
+      this.#hero.x = Settings.unit * 1.5;
+    }
+
+    if (this.#hero.x > this.#screen.width - Settings.unit * 1.5) {
+      this.#hero.x = this.#screen.width - Settings.unit * 1.5;
+    }
+
+    this.#hero.y += Math.round(
+      ((this.velocityY * Hero.height) / (Settings.unit * 0.25)) * delta
+    );
+
+    if (this.#hero.y < 0 + Settings.unit * 1.5) {
+      this.#hero.y = Settings.unit * 1.5;
+    }
+
+    if (this.#hero.y > this.#screen.height - Settings.unit * 1.5) {
+      this.#hero.y = this.#screen.height - Settings.unit * 1.5;
+    }
   }
 }
