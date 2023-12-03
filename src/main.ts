@@ -1,7 +1,7 @@
 import 'modern-normalize';
 import './style.css';
-import './fonts';
-import { Application } from 'pixi.js';
+import './utils/fonts';
+import { Game } from './game/Game';
 
 declare global {
   interface Window {
@@ -9,18 +9,14 @@ declare global {
   }
 }
 
+const game = new Game();
+
 window.WebFontConfig = {
   google: {
     families: ['Press Start 2P'],
   },
   active() {
-    console.log('game ready');
+    game.render(document.getElementById('app') || document.body);
+    game.start();
   },
 };
-
-const app = new Application<HTMLCanvasElement>({
-  resizeTo: window,
-  backgroundColor: '#222222',
-});
-
-document.body.appendChild(app.view);
