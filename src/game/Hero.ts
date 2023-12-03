@@ -35,6 +35,33 @@ export class Hero {
     this.reset();
     this.#view.addChild(this.#hero);
 
+    document.addEventListener('pointerdown', (event) => {
+      if (
+        event.target !== document.querySelector('#app canvas') ||
+        !(event.target instanceof HTMLElement)
+      ) {
+        return;
+      }
+      const x = event.clientX - event.target.getBoundingClientRect().left;
+      const y = event.clientY - event.target.getBoundingClientRect().top;
+
+      if (x < this.#hero.x - Settings.unit * 2) {
+        this.velocityX = -1;
+      }
+
+      if (x > this.#hero.x + Settings.unit * 2) {
+        this.velocityX = 1;
+      }
+
+      if (y < this.#hero.y - Settings.unit * 2) {
+        this.velocityY = -1;
+      }
+
+      if (y > this.#hero.y + Settings.unit * 2) {
+        this.velocityY = 1;
+      }
+    });
+
     document.addEventListener('keydown', (key) => {
       if (key.code === 'ArrowUp') {
         this.velocityY = -1;
